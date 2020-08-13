@@ -1,0 +1,3 @@
+ha ha ha
+ohh i can see the use of context manager
+they perform certain operation to ensure your resource can be free.

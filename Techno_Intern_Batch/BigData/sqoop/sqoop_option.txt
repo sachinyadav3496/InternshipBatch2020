@@ -1,0 +1,17 @@
+--bindir
+/usr/local/sqoop/lib
+--driver
+com.mysql.jdbc.Driver
+--connect
+jdbc:mysql://localhost/student
+--table
+data
+--username
+root
+--password
+redhat
+--target-dir
+/user/hduser/grras
+--delete-target-dir
+--m
+1

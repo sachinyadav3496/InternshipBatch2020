@@ -1,0 +1,5 @@
+name,maths,phy,chem
+sachin, 67, 76, 87
+rajat, 67, 87, 67
+nidhi, 67, 87, 67
+nikita, 45, 65, 47

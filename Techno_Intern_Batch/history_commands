@@ -1,0 +1,1000 @@
+    3  cd
+    4  find /usr/local/hadoop-3.1.3/ -name *example*
+    5  find /usr/local/hadoop-3.1.3/ -name *example*.jar
+    6  cp /usr/local/hadoop-3.1.3/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.1.3.jar  .
+    7  ls
+    8  hadoop jar hadoop-mapreduce-examples-3.1.3.jar /usr/local/hadoop-3.1.3/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.1.3.jar
+    9  hadoop jar hadoop-mapreduce-examples-3.1.3.jar WordCount /user/hduser/input /user/hduser/output
+   10  hadoop jar hadoop-mapreduce-examples-3.1.3.jar wordcount /user/hduser/input /user/hduser/output
+   11  hdfs dfs -ls ouput/
+   12  hdfs dfs -ls output/
+   13  hdfs dfs -ls output/output/part-r-00000
+   14  hdfs dfs -ls cat output/part-r-00000 2> /dev/null
+   15  hdfs dfs -cat output/part-r-00000 2> /dev/null
+   16  # jar
+   17  cat /etc/bashrc 
+   18  hdfs dfs -rm -r input output
+   19  find $HADOOP_INSTALL -name *example*.jar
+   20  hadoop jar /usr/local/hadoop-3.1.3/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.1.3.jar wordcount /user/hduser/input /user/hduser/output
+   21  hdfs dfs -cat /user/hduser/oputput/part-000000
+   22  hdfs dfs -cat /user/hduser/output/part-000000
+   23  hdfs dfs -cat /user/hduser/output/part-00000
+   24  hdfs dfs -cat /user/hduser/output/part-r-00000
+   25  # value_counts 
+   26  # you will find a copy of a noval and upload it into hdfs
+   27  # than count words and find some usefull insights using pandas
+   28  # topic Modeling
+   29  ls
+   30  git version
+   31  cd Downloads/
+   32  ls
+   33  vim break.py 
+   34  ls
+   35  rm ./*
+   36  ls
+   37  chmod a+x break_tk.py 
+   38  vim break_tk.py 
+   39  ./break_tk.py 
+   40  vim break_tk.py 
+   41  ./break_tk.py 
+   42  vim break_tk.py 
+   43  python break_tk.py 
+   44  vim break_tk.py 
+   45  python break_tk.py 
+   46  vim break_tk.py 
+   47  python break_tk.py 
+   48  vim break_tk.py 
+   49  python break_tk.py 
+   50  cd
+   51  ls
+   52  mkdir hadoop_streaming
+   53  mv file0* hadoop
+   54  mv file0* hadoop_streaming/
+   55  ls
+   56  cd hadoop_streaming/
+   57  ls
+   58  cat file01
+   59  cat file02
+   60  hdfs dfs -cat /user/hduser/input 2> /dev/null
+   61  hdfs dfs -ls /user/hduser/input 2> /dev/null
+   62  # WordCount Program
+   63  cat file01
+   64  cat file01 | wc 
+   65  file01 -> input --> cat --> output --> input --> wc --> ouput
+   66  #file01->input split --> map.py --> key-value pairs --> partitioner --> input ---> reducer.py --> result
+   67  # input file --> sys.stdin
+   68  python
+   69  ls
+   70  cat file01
+   71  vim map.py
+   72  cat map.py 
+   73  chmod a+x map.py 
+   74  cat file01 | ./map.py
+   75  #file01->input split --> map.py --> key-value pairs --> partitioner --> input ---> reducer.py --> result
+   76  vim map.py
+   77  cat map.py 
+   78  cat file01 | map.py
+   79  cat file01 | ./map.py
+   80  cat file02 | ./map.py
+   81  vim reduce.py
+   82  cat file01
+   83  chown a+x reduce.py 
+   84  chmod a+x reduce.py 
+   85  cat file01
+   86  cat file01 | ./map.py 
+   87  cat file01 | ./map.py | ./reduce.py 
+   88  vim reduce.py 
+   89  cat file01 | ./map.py 
+   90  cat file01 | ./map.py | ./reduce.py 
+   91  vim reduce.py 
+   92  cat file01 | ./map.py | ./reduce.py 
+   93  vim reduce.py 
+   94  cat file01 | ./map.py | ./reduce.py 
+   95  vim reduce.py 
+   96  cat file01 | ./map.py | ./reduce.py 
+   97  cat file01
+   98  cat file01 | ./map.py 
+   99  cat file01 | ./map.py | ./reduce.py 
+  100  ls
+  101  rm output 
+  102  rm ouput 
+  103  rm input 
+  104  ls
+  105  rm cat 
+  106  rm wc 
+  107  ls
+  108  mared streaming --input /user/hduser/input --output /user/hduser/output --mapper ./map.py --reducer ./reduce.py 
+  109  mapred streaming --input /user/hduser/input --output /user/hduser/output --mapper ./map.py --reducer ./reduce.py 
+  110  cat /user/hduser/output
+  111  hdfs dfs -cat /user/hduser/output 2> /dev/null
+  112  hdfs dfs -l /user/hduser/output 2> /dev/null
+  113  hdfs dfs -ls /user/hduser/output 2> /dev/null
+  114  hdfs dfs -cat /user/hduser/output/part-00000 2> /dev/null
+  115  mapred streaming --input /user/hduser/input --output /user/hduser/output1 --mapper ./map.py --reducer ./reduce.py -D mapreduce.job.reduces=2
+  116  mapred streaming -D mapreduce.job.reduces=2 --input /user/hduser/input --output /user/hduser/output1 --mapper ./map.py --reducer ./reduce.py 
+  117  mapred streaming -D mapreduce.job.reduces=2 --input /user/hduser/input --output /user/hduser/two_reducer --mapper /home/hduser/hadoop_streaming/map.py --reducer /home/hduser/hadoop_streaming/reduce.py 
+  118  hdfs dfs -ls  /user/hduser/two_reducer 
+  119  hdfs dfs -cat  /user/hduser/two_reducer/part-00000
+  120  hdfs dfs -cat  /user/hduser/two_reducer/part-00001
+  121  mapred streaming -D mapreduce.job.reduces=3 --input /user/hduser/input --output /user/hduser/three_reducer --mapper /home/hduser/hadoop_streaming/map.py --reducer /home/hduser/hadoop_streaming/reduce.py 
+  122  hdfs dfs -ls  /user/hduser/three_reducer 
+  123  hdfs dfs -cat  /user/hduser/two_reducer/part-00001
+  124  hdfs dfs -cat  /user/hduser/three_reducer/part-00000
+  125  hdfs dfs -cat  /user/hduser/three_reducer/part-00001
+  126  hdfs dfs -cat  /user/hduser/three_reducer/part-00002
+  127  poweroff
+  128  start-all.sh
+  129  jps
+  130  ip addr show ens33
+  131  hostname
+  132  sudo hostnamectl set-hostname 'localhost.localdomain'
+  133  bash
+  134  vim assignment
+  135  poweroff
+  136  ping google.co.in
+  137  sudo dhclient
+  138  ping google.co.in -c 3
+  139  jps
+  140  start-all.sh
+  141  jps
+  142  hdfs dfs -ls / 
+  143  # MAP Reduce 
+  144  cd hadoop_streaming/
+  145  ls
+  146  hdfs dfs -tail /user/hduser/tips/tips.csv 2> /dev/null
+  147  # porportion of Male & Female in tips dataset
+  148  # map.py
+  149  # reduce.py
+  150  cd
+  151  mkdir tip_analysis
+  152  cd tip_analysis/
+  153  #mapper.py
+  154  vim male_female_props_map.py
+  155  vim demo.txt
+  156  vim male_female_props_map.py
+  157  chmod a+x male_female_props_map.py 
+  158  cat demo.txt | ./male_female_props_map.py 
+  159  chmod a+x male_female_props_map.py 
+  160  vim male_female_props_map.py
+  161  cat demo.txt | ./male_female_props_map.py 
+  162  vim male_female_props_map.py
+  163  cat demo.txt | ./male_female_props_map.py 
+  164  cat demo.txt | ./male_female_props_map.py > map_output
+  165  cat map_output 
+  166  history | tail -n 5
+  167  cat map_output 
+  168  vim male_female_props_reduce.py
+  169  chmod a+x male_female_props_reduce.py 
+  170  cat map_output 
+  171  cat map_output | ./male_female_props_reduce.py 
+  172  vim male_female_props_reduce.py
+  173  cat map_output | ./male_female_props_reduce.py 
+  174  vim male_female_props_reduce.py
+  175  cat map_output | ./male_female_props_reduce.py 
+  176  vim male_female_props_reduce.py
+  177  cat map_output | ./male_female_props_reduce.py 
+  178  vim male_female_props_reduce.py
+  179  cat map_output | ./male_female_props_reduce.py 
+  180  vim male_female_props_reduce.py
+  181  cat map_output | ./male_female_props_reduce.py 
+  182  vim male_female_props_reduce.py
+  183  cat map_output | ./male_female_props_reduce.py 
+  184  vim male_female_props_reduce.py
+  185  cat map_output | ./male_female_props_reduce.py 
+  186  vim male_female_props_reduce.py
+  187  cat map_output | ./male_female_props_reduce.py 
+  188  vim male_female_props_reduce.py
+  189  cat demo.txt | ./male_female_props_map.py | ./male_female_props_reduce.py 
+  190  mapred streaming --input /user/hduser/tips --output /user/hduser/tips_sex_props --mapper /home/hduser/tip_analysis/male_female_props_map.py --reducer /home/hduser/tip_analysis/male_female_props_reduce.py 
+  191  hdfs dfs -ls  /user/hduser/tips_sex_props
+  192  hdfs dfs -cat  /user/hduser/tips_sex_props/part-00000
+  193  cat *map.py
+  194  cat *.reduce.py
+  195  cat *reduce.py
+  196  cd
+  197  # HDFS - Data Lake / Data Warehouse / Database
+  198  # SQOOP -> Data ingest from RDBMS
+  199  # Dyanmo DB, DB2, Redis, Mariadb, MySQL, MS SQL, POSGRESQL ...
+  200  # how to setup database server in linux
+  201  sudo yum group install mariadb mariadb-client
+  202  #sudo yum group install mariadb mariadb-client
+  203  sudo firewall-cmd --permanent --add-service=mysql 
+  204  sudo firewall-cmd --permanent --add-port=3306/tcp
+  205  sudo mysql_secure_installation 
+  206  # ctrl+c -> interrupt
+  207  sudo systemctl enable mariadb.service 
+  208  sudo systemctl restart mariadb.service 
+  209  sudo systemctl status mariadb.service 
+  210  sudo mysql_secure_installation 
+  211  #sudo yum group install mariadb mariadb-client
+  212  #sudo firewall-cmd --permanent --add-service=mysql 
+  213  #sudo firewall-cmd --permanent --add-port=3306/tcp
+  214  #sudo systemctl enable mariadb.service 
+  215  #sudo systemctl restart mariadb.service 
+  216  #sudo systemctl status mariadb.service 
+  217  #sudo mysql_secure_installation 
+  218  mysql -u root -p
+  219  # any doubt ? 
+  220  ls
+  221  ./break.py 
+  222  can we start ? 
+  223  cd Downloads/
+  224  ls
+  225  mv break_tk.py ../Desktop/
+  226  ls
+  227  tar -xf sqoop-1.4.7.bin__hadoop-2.6.0.tar.gz 
+  228  ls
+  229  rm *gz
+  230  ls
+  231  sudo mv sqoop-1.4.7.bin__hadoop-2.6.0 /usr/local/
+  232  ls /usr/local/
+  233  ls /usr/local/ -l
+  234  cd /usr/local/sqoop-1.4.7.bin__hadoop-2.6.0/
+  235  ls
+  236  ./bin/sqoop --version
+  237  ./bin/sqoop version
+  238  pwd
+  239  ./bin/sqoop version
+  240  vim /home/hduser/.bashrc 
+  241  source /home/hduser/.bashrc 
+  242  cd
+  243  echo $SQOOP_HOME
+  244  sqoop version 2> /dev/null
+  245  cd $SQOOP_HOME
+  246  ls
+  247  cd conf/
+  248  ls
+  249  vim sqoop-site.xml
+  250  vim sqoop-env-template.sh
+  251  cd
+  252  # sqoop file -> /usr/local
+  253  # environment variables 
+  254  sudo python -m pip install mysql-client
+  255  sudo python -m pip install pymysql
+  256  python 
+  257  cd $SQOOP_HOME
+  258  ls
+  259  cd conf/
+  260  ls
+  261  vim sqoop-site.xml 
+  262  cd
+  263  cd Downloads/
+  264  ls
+  265  cp mariadb-java-client-2.6.1.jar /usr/local/sqoop-1.4.7.bin__hadoop-2.6.0/lib/
+  266  # import numpy -> lib --> /usr/local/anaconda3/lib/
+  267  ls
+  268  jar -xf mariadb-java-client-2.6.1.jar 
+  269  ls
+  270  rm *jar
+  271  ls
+  272  cd org/
+  273  ls
+  274  cd mariadb/
+  275  ls
+  276  cd jdbc 
+  277  ls
+  278  ls | grep Driver
+  279  cd
+  280  ls
+  281  cd Downloads/
+  282  ls
+  283  rm -rf * 
+  284  ls
+  285  cd
+  286  ls
+  287  mysql -u root -p 
+  288  # sqoop install
+  289  # db sqoop user for quering in hadoop database
+  290  sqoop eval --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/hadoop
+  291  sqoop eval --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/hadoop --user sqoop--password redhat --query "SELECT * FROM student"
+  292  sqoop eval --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/hadoop --user sqoop --password redhat --query "SELECT * FROM student"
+  293  sqoop eval --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/hadoop --username sqoop --password redhat --query "SELECT * FROM student"
+  294  sqoop eval --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/hadoop --username sqoop --password redhat --query "SELECT * FROM student" 2> /dev/null
+  295  sqoop eval --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/hadoop --username sqoop --password redhat --query "INSERT INTO student VALUES (5, 'nikhil', 23, 'Male')"
+  296  mysql -u root -p
+  297  #sqoop eval --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/hadoop --username sqoop --password redhat --query "INSERT INTO student VALUES (5, 'nikhil', 23, 'Male')"
+  298  sqoop import --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/hadoop --username sqoop --password redhat --table student --target-dir /user/sqoop 
+  299  sqoop import --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/hadoop --username sqoop --password redhat --table student --target-dir /user/sqoop/sqoop 
+  300  sqoop import --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/hadoop --username sqoop --password redhat --table student --target-dir /user/sqoop/student
+  301  hdfs dfs -ls /user/sqoop/student
+  302  hdfs dfs -ls /user/sqoop/student/part-m-00000
+  303  hdfs dfs -cat /user/sqoop/student/part-m-00000
+  304  hdfs dfs -cat /user/sqoop/student/part-m-00001
+  305  sqoop import --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/hadoop --username sqoop --password redhat --table student --target-dir /user/sqoop/student1 -m 1
+  306  hdfs dfs -ls /user/sqoop/student1
+  307  hdfs dfs -cat /user/sqoop/student1/part-m-00000
+  308  # take data from database and put it into hdfs 
+  309  #sqoop import --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/hadoop --username sqoop --password redhat --table student --target-dir /user/sqoop/student1 -m 1
+  310  poweroff
+  311  exit
+  312  ls
+  313  sudo vim /etc/hostname 
+  314  bash
+  315  exit
+  316  start-all.sh
+  317  jps
+  318  ping google.co.in -c 3
+  319  dhclient
+  320  sudo dhclient
+  321  ip addr show ens33
+  322  hdfs dfs -ls /
+  323  stop-all.sh
+  324  jps
+  325  c
+  326  cd $HADOOP_INSTALL
+  327  ls
+  328  cd etc/hadoop/
+  329  ls
+  330  rm masters slaves 
+  331  ls
+  332  vim core-site.xml 
+  333  ip add show ens33
+  334  # router --> new ip --> dynamic
+  335  # dhcp -> dynamic host controll protocol
+  336  cd
+  337  vim ip_info.txt
+  338  ping -c 3 192.168.29.1 
+  339  ping -c 3 8.8.8.8 
+  340  ping google.co.in -c 3
+  341  ping facebook.com -c 3
+  342  ip addr show ens33
+  343  sudo vim /etc/hostname 
+  344  bash
+  345  exit
+  346  sudo vim /etc/hostname 
+  347  bash
+  348  hostname
+  349  which hostname
+  350  vim /etc/hosts
+  351  # /etc/hosts --> personal DNS
+  352  # IP1 Name
+  353  # IP2 Name
+  354  # 192.168.29.10 DN1
+  355  # 192.168.20.20 DN2
+  356  # /etc/hosts -> ping google.co.in
+  357  # ping DN1 --> /etc/hosts
+  358  # google dns 
+  359  vim /etc/hosts
+  360  sudo vim /etc/hosts
+  361  ping sachin
+  362  sudo vim /etc/hosts
+  363  ping sachin
+  364  sudo vim /etc/hosts
+  365  cd /usr/local/hadoop-3.1.3/
+  366  cd etc/hadoop/
+  367  ls
+  368  vim core-site.xml 
+  369  vim hdfs-site.xml 
+  370  vim mapred-site.xml 
+  371  vim yarn-site.xml 
+  372  cat hdfs-site.xml 
+  373  cd
+  374  jps
+  375  sudo reboot
+  376  mysql -u root -p 
+  377  show tables;
+  378  desc country;
+  379  mysql -u root - p world
+  380  mysql -u root -p world
+  381  hostname
+  382  # /etc/hostname
+  383  # /etc/hosts
+  384  cat /etc/hosts
+  385  ip addr show ens33
+  386  ping 192.168.29.1 -c 3
+  387  ping google.co.in -c 
+  388  ping google.co.in -c 3
+  389  jps
+  390  start-all.sh
+  391  jps
+  392  # scp / rsync / ftp
+  393  # scp / rsync / ftp --> migration
+  394  # sysadmin -> 40% -> migration
+  395  # 10k -> new_system --> data 
+  396  # fix -> knowldege 
+  397  pwd
+  398  ls
+  399  pic grras.jpg 
+  400  ls
+  401  mkdir data
+  402  ls
+  403  cd data/
+  404  pwd
+  405  ls
+  406  cd CoronaVirus/
+  407  ls
+  408  cd ..
+  409  ls
+  410  # samba
+  411  # nfs
+  412  # big data adming
+  413  # big data admin
+  414  # linux, servers
+  415  # RHCE -> servers
+  416  # ftp, sambda, iscsi, nfs, ldap 
+  417  ls
+  418  cd TEST_DATABASES/
+  419  ls
+  420  cd
+  421  wget
+  422  cd data/
+  423  ls
+  424  wget https://s3-api.us-geo.objectstorage.softlayer.net/cf-courses-data/CognitiveClass/DV0101EN/labs/Data_Files/Canada.xlsx
+  425  ls
+  426  #weget url 
+  427  sudo yum install git
+  428  cd
+  429  ls
+  430  mkdir test_data
+  431  cd test_data/
+  432  ls
+  433  git clone https://github.com/sachinyadav3496/Datasets.git
+  434  git clone https://github.com/mwaskom/seaborn-data.git
+  435  ls
+  436  cd Datasets/
+  437  ls
+  438  cd data
+  439  cd database/
+  440  ls
+  441  cd TEST_DATABASES/
+  442  ls
+  443  cd ..
+  444  ls
+  445  cd database/
+  446  ls
+  447  pwd
+  448  ~/break_tk.py 
+  449  python ~/break_tk.py 
+  450  vim ~/break.py
+  451  python ~/break.py
+  452  systemctl status mariadb
+  453  mysql -u sqoop -p hadoop
+  454  ls
+  455  vim world-schema.sql 
+  456  # > redirection command output > file
+  457  # < indirection command input < file
+  458  mysql -u root -p < world-schema.sql 
+  459  sqoop import --driver org.mariadb.jdbc.Driver
+  460  sqoop import --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/word --username root
+  461  sqoop import --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/world --username root --password redhat --table Country --target-dir /user/sqoop/country --fields-terminated-by '\t' --lines-terminated-by '\n'   -m 1
+  462  sqoop import --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/world --username root --password redhat --query "SELECT cn.Name, ca.Name, cn.Population FROM Country cn INNER JOIN City ca ON cn.Capital=ca.ID" --target-dir /user/sqoop/info --fields-terminated-by '\t' --lines-terminated-by '\n'   -m 1
+  463  sqoop import --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/world --username root --password redhat --query "SELECT cn.Name, ca.Name, cn.Population FROM Country cn INNER JOIN City ca ON cn.Capital=ca.ID and  $CONDITIONS" --target-dir /user/sqoop/info --fields-terminated-by '\t' --lines-terminated-by '\n'   -m 1
+  464  echo $CONDITIONS
+  465  sqoop import --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/world --username root --password redhat --query "SELECT cn.Name, ca.Name, cn.Population FROM Country cn INNER JOIN City ca ON cn.Capital=ca.ID and  \$CONDITIONS" --target-dir /user/sqoop/info --fields-terminated-by '\t' --lines-terminated-by '\n'   -m 1
+  466  sqoop import --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/world --username root --password redhat --query "SELECT Country.Name, City.Name as Capital, Country.Population FROM Country INNER JOIN City  ON Country.Capital=City.ID and  \$CONDITIONS" --target-dir /user/sqoop/info --fields-terminated-by '\t' --lines-terminated-by '\n'   -m 1
+  467  sqoop import --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/world --username root --password redhat --query "SELECT Country.Name, City.Name as Capital, Country.Population FROM Country INNER JOIN City  ON Country.Capital=City.ID and  \$CONDITIONS" --target-dir /user/sqoop/info --fields-terminated-by ',' --lines-terminated-by '\n'  --delete-target-dir  -m 1
+  468  vim sqoop_commands
+  469  vim sqoop_commands 
+  470  sqoop import --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/world --username root -p redhat --query "SELECT Country.Name, City.Name as Capital, Country.Population FROM Country INNER JOIN City  ON Country.Capital=City.ID and  \$CONDITIONS" --target-dir /user/sqoop/info --fields-terminated-by ',' --lines-terminated-by '\n'  --delete-target-dir  -m 1
+  471  sqoop import --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/world --username root -P redhat --query "SELECT Country.Name, City.Name as Capital, Country.Population FROM Country INNER JOIN City  ON Country.Capital=City.ID and  \$CONDITIONS" --target-dir /user/sqoop/info --fields-terminated-by ',' --lines-terminated-by '\n'  --delete-target-dir  -m 1
+  472  sqoop import --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/world --username root -P --query "SELECT Country.Name, City.Name as Capital, Country.Population FROM Country INNER JOIN City  ON Country.Capital=City.ID and  \$CONDITIONS" --target-dir /user/sqoop/info --fields-terminated-by ',' --lines-terminated-by '\n'  --delete-target-dir  -m 1
+  473  cd
+  474  ls
+  475  cd mkdir sqoop_exp
+  476   mkdir sqoop_exp
+  477  cd -
+  478  ls
+  479  cp sqoop_commands ~/sqoop_exp/
+  480  cd ~/sqoop_exp/
+  481  ls
+  482  vim params.txt
+  483  sqoop import --options-file params.txt --query "SELECT NAME,Population FROM Country WHERE \$CONDITIONS ORDER BY Population LIMIT 10" --target-dir most_populated_country
+  484  vim params.txt
+  485  sqoop import --options-file params.txt --query "SELECT NAME,Population FROM Country WHERE \$CONDITIONS ORDER BY Population LIMIT 10" --target-dir most_populated_country
+  486  vim params.txt
+  487  pwd
+  488  vim params.txt
+  489  vim password
+  490  echo "redhat" > password
+  491  cat password
+  492  echo -n "redhat" > password
+  493  cat password
+  494  sqoop import --options-file params.txt --query "SELECT NAME,Population FROM Country WHERE \$CONDITIONS ORDER BY Population LIMIT 10" --target-dir most_populated_country
+  495  cat /home/hduser/sqoop_exp/password
+  496  vim params.txt 
+  497  cat /home/hduser/sqoop_exp/password
+  498  sqoop import --options-file params.txt --query "SELECT NAME,Population FROM Country WHERE \$CONDITIONS ORDER BY Population LIMIT 10" --target-dir most_populated_country
+  499  vim params.txt 
+  500  sqoop import --options-file params.txt --query "SELECT NAME,Population FROM Country WHERE \$CONDITIONS ORDER BY Population LIMIT 10" --target-dir most_populated_country
+  501  vim sqoop_commands 
+  502  ls
+  503  sqoop import-all
+  504  sqoop import-all --options-file params.txt --warehouse-dir /home/sqoop/world
+  505  sqoop import-all-tables --options-file params.txt --warehouse-dir /home/sqoop/world
+  506  cp params.txt all_params.txt
+  507  vim all_params.txt 
+  508  vim sqoop_commands 
+  509  # a table 
+  510  # a query
+  511  # whole database 
+  512  # export ? 
+  513  # incremental import 
+  514  # boundary quary
+  515  # split-by
+  516  sqoop import --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/world --username root --password redhat --boundary-query "select CountryCode,avg(Population) from City group by CountryCode" --target-dir /user/sqoop/avg_city
+  517  sqoop import --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/world --username root --password redhat --boundary-query "select CountryCode,avg(Population) from City group by CountryCode" --target-dir /user/sqoop/avg_city --table City
+  518  sqoop import --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/world --username root --password redhat --boundary-query "select avg(Population) from City group by CountryCode" --target-dir /user/sqoop/avg_city --table City --delete-target-dir
+  519  sqoop codegen --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/word --username root -P --table City --target-dir /city --output-dir /home/hduser/sqoop_exp
+  520  sqoop codegen --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/word --username root -P --table City --output-dir /home/hduser/sqoop_exp
+  521  sqoop codegen --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/word --username root -P --table City --outdir /home/hduser/sqoop_exp
+  522  sqoop codegen --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/world --username root -P --table City --outdir /home/hduser/sqoop_exp
+  523  ls
+  524  /tmp/sqoop-hduser/compile/a29e6979cb07ba2a0b775cbaf1f2bb58/City.jar
+  525  cp /tmp/sqoop-hduser/compile/a29e6979cb07ba2a0b775cbaf1f2bb58/City.jar
+  526  cp /tmp/sqoop-hduser/compile/a29e6979cb07ba2a0b775cbaf1f2bb58/City.jar ./
+  527  ls
+  528  vim City.java
+  529  vim sqoop_commands 
+  530  ls
+  531  cd 
+  532  ls
+  533  vim mytable1.txt
+  534  vim mytable2.txt
+  535  cat mytable1.txt 
+  536  cat mytable2.txt 
+  537  hdfs dfs -mkdir /user/hduser/info 
+  538  hdfs dfs -put mytable* /user/hduser/info
+  539  cat mytable1.txt 
+  540  sqoop export --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/hadoop --username sqoop --password redhat --table info --export-dir /user/hduser/info 
+  541  sqoop export --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/hadoop --username sqoop --password redhat --table info --export-dir /user/hduser/info --fields-terminated-by "," --lines-terminated-by '\n'
+  542  #sqoop export --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost:3306/hadoop --username sqoop --password redhat --table info --export-dir /user/hduser/info --fields-terminated-by "," --lines-terminated-by '\n'
+  543  cd sqoop_exp/
+  544  vim sqoop_commands 
+  545  # import - export 
+  546  # FLUME -> Fetch -> unstructure -> Twitter
+  547  # SPARK
+  548  stop-all.sh
+  549  #
+  550  jps
+  551  poweroff
+  552  start-all.sh 2> /dev/null
+  553  jps
+  554  # HDFS, MAPREDUCE, SQOOP, FLUME, YARN, HIVE, 
+  555  # Big Data Tool
+  556  history | tail -n 10
+  557  history | tail -n 50
+  558  history | grep import | tail -n 5
+  559  history | grep import | head -n 5
+  560  history | grep import | head -n 20 | tail -n 5
+  561  # revised in short whatever we have learned till now  ? 
+  562  # any doubt ? sqoop, hdfs, yarn , mapreduce 
+  563  ls
+  564  cd
+  565  cd Downloads/
+  566  ls
+  567  tar -xf apache-flume-1.9.0-bin.tar.gz 
+  568  ls
+  569  rm *tar*
+  570  ls
+  571  sudo mv apache-flume-1.9.0-bin /usr/local/
+  572  ls /usr/local/
+  573  ls -l 
+  574  ls -l  /usr/local
+  575  cd /usr/local/apache-flume-1.9.0-bin/
+  576  ls
+  577  # step 1 download file
+  578  # step 2 extract file
+  579  # step 3 move file into right location
+  580  # step 4 update your environment
+  581  cd bin/
+  582  ls
+  583  ./flume-ng version
+  584  sudo vim /home/hduser/.bashrc # environment
+  585  cd ..
+  586  ls
+  587  pwd
+  588  vim /home/hduser/.bashrc 
+  589  source /home/hduser/.bashrc 
+  590  cd
+  591  pwd
+  592  flume-ng version
+  593  echo $FLUME_HOME
+  594  cd $FLUME_HOME
+  595  pwd
+  596  ls
+  597  cd conf
+  598  ls
+  599  vim log4j.properties 
+  600  vim flume-env.sh.template 
+  601  echo $JAVA_HOME
+  602  flume-ng version
+  603  ls
+  604  vim flume-conf.properties.template 
+  605  cp flume-conf.properties.template flume-conf.properties
+  606  vim flume-conf.properties
+  607  flume-ng agent
+  608  flume-ng agent -n agent --conf ./flume-conf.properties
+  609  stop-all.sh
+  610  poweroff
+  611  echo hello
+  612  exit;
+  613  telent localhost 44444
+  614  sudo yum install telnet
+  615  telnet localhost 44444
+  616  /home/hduser/flume_conf/seq_gen.py
+  617  cd flume_conf/
+  618  vim my_flume.properties 
+  619  hdfs dfs -ls /user/flume
+  620  hdfs dfs -ls /user/flume/mydata
+  621  hdfs dfs -cat /user/flume/mydata/cpu_percent_.1594446173193.txt
+  622  time
+  623  date 
+  624  ping google.co.in
+  625  dhclient
+  626  sudo dhclient
+  627  ping google.co.in
+  628  ip addr show 
+  629  ping 192.168.29.1 -c 3
+  630  ls
+  631  vim twitter_conf.properties 
+  632  start-all.sh
+  633  jps
+  634  echo $FLUME_HOME
+  635  cd /usr/local/apache-flume-1.9.0-bin/
+  636  ls
+  637  cd conf/
+  638  ls
+  639  vim flume-conf.properties
+  640  ls
+  641  vim flume-conf.properties
+  642  flume-ng agent -n agent -c /usr/local/apache-flume-1.9.0-bin/conf -f flume-conf.properties 
+  643  cd
+  644  mkdir flume_conf
+  645  cd flume_conf/
+  646  ls
+  647  vim netcat.conf
+  648  mv netcat.conf netcat.property
+  649  vim netcat.property 
+  650  vim netcat.properties
+  651  mv netcat.property netcat.properties
+  652  vim netcat.properties 
+  653  ls
+  654  in/flume-ng agent --conf conf --conf-file example.conf --name a1 -Dflume.root.logger=INFO,console
+  655  flume-ng agent --conf /home/hduser/flume_conf --conf-file netcat.properties --name a1 -Dflume.root.logger=INFO,console
+  656  hdfs dfs -mkdir /user/flume 2> /dev/null
+  657  hdfs dfs -chmod 777 /user/flume 2> /dev/null
+  658  hdfs dfs -chown hduser:hduser /user/flume 2> /dev/null
+  659  hdfs dfs -ls /user 2> /dev/null
+  660  hdfs dfs -chown flume:flume /user/flume 2> /dev/null
+  661  hdfs dfs -ls /user 2> /dev/null
+  662  # source path  /user/flume
+  663  vim netcat.properties 
+  664  cat netcat.properties 
+  665  flume-ng agent -n a1 -c /home/hduser/flume_conf -f netcat.properties 
+  666  vim netcat.properties 
+  667  flume-ng agent -n a1 -c /home/hduser/flume_conf -f netcat.properties 
+  668  python
+  669  vim seq_gen.py
+  670  chmod a+x seq_gen.py 
+  671  ./seq_gen.py 
+  672  vim my_flume.properties
+  673  ls
+  674  vim my_flume.properties
+  675  flume-ng agent -name myagent -c /home/hduser/flume_conf -f my_flume.properties 
+  676  vim my_flume.properties
+  677  flume-ng agent -name myagent -c /home/hduser/flume_conf -f my_flume.properties 
+  678  vim my_flume.properties 
+  679  flume-ng agent -name myagent -c /home/hduser/flume_conf -f my_flume.properties 
+  680  vim my_flume.properties 
+  681  flume-ng agent -name myagent -c /home/hduser/flume_conf -f my_flume.properties 
+  682  vim my_flume.properties
+  683  vim seq_gen.py 
+  684  flume-ng agent -name myagent -c /home/hduser/flume_conf -f my_flume.properties 
+  685  cat netcat.properties 
+  686  vim my_flume.properties 
+  687  flume-ng agent -name myagent -c /home/hduser/flume_conf -f my_flume.properties 
+  688  cd $FLUME_HOME
+  689  ls
+  690  cd lib/
+  691  ls
+  692  ls | grep guava-11.0.2.jar 
+  693  mv guava-11.0.2.jar  /home/hduser/flume_conf/
+  694  cd
+  695  cd flume_conf/
+  696  flume-ng agent -name myagent -c /home/hduser/flume_conf -f my_flume.properties 
+  697  # done 
+  698  cd
+  699  python break.py 
+  700  let's start
+  701  ls
+  702  cd flume_conf/
+  703  ls
+  704  vim my_flume.properties 
+  705  ls
+  706  #mv /usr/local/apache-flume-1.9.0-bin/lib/guava-11.0.2.jar /home/hduser/flume_conf
+  707  flume-ng agent -n myagent -c /home/hduser/flume_conf -f my_flume.properties 
+  708  vim my_flume.properties 
+  709  flume-ng agent -n myagent -c /home/hduser/flume_conf -f my_flume.properties 
+  710  vim my_flume.properties 
+  711  flume-ng agent -n myagent -c /home/hduser/flume_conf -f my_flume.properties 
+  712  vim seq_gen.py 
+  713  vim my_flume.properties 
+  714  flume-ng agent -n myagent -c /home/hduser/flume_conf -f my_flume.properties 
+  715  vim my_flume.properties 
+  716  flume-ng agent -n myagent -c /home/hduser/flume_conf -f my_flume.properties 
+  717  vim my_flume.properties 
+  718  flume-ng agent -n myagent -c /home/hduser/flume_conf -f my_flume.properties 
+  719  vim my_flume.properties 
+  720  flume-ng agent -n myagent -c /home/hduser/flume_conf -f my_flume.properties 
+  721  vim seq_gen.py 
+  722  flume-ng agent -n myagent -c /home/hduser/flume_conf -f my_flume.properties 
+  723  vim twitter_conf.properties
+  724  cat twitter_conf.properties 
+  725  flume-ng agent -n myagent -c /home/hduser/flume_conf -f twitter_conf.properties 
+  726  vim twitter_conf.properties
+  727  flume-ng agent -n myagent -c /home/hduser/flume_conf -f twitter_conf.properties 
+  728  vim twitter_conf.properties
+  729  flume-ng agent -n myagent -c /home/hduser/flume_conf -f twitter_conf.properties 
+  730  hdfs dfs -ls /user/flume/twitter
+  731  hdfs dfs -cat /user/flume/twitter/cpu_percent_.1594448193179.txt
+  732  hdfs dfs -cat /user/flume/twitter/cpu_percent_.1594448193178.txt
+  733  # flume install -> fetch data from twitter ? 
+  734  vim twitter_conf.properties 
+  735  flume-ng agent -n myagent -c /home/hduser/flume_conf -f twitter_conf.properties 
+  736  gedit
+  737  stop-all.sh
+  738  poweroff
+  739  hostname
+  740  ping google.co.in -c 3 
+  741  # hostname -->DNS--> ip ---> ping 
+  742  # 5-7 DNS -> records -> domain purchange
+  743  # IANA
+  744  nslookup 192.168.29.29
+  745  nslookup 2404:6800:4002:80e::2003
+  746  nslookup facebook.com
+  747   # how to create DNS server  ? 
+  748  # DNS -> 172.25.67.8 --> facebook.com --> DNS --> server --> username, password --> original --> phising 
+  749  # DNS system adming
+  750  # /etc/hosts --> DNS records (private)
+  751  sudo vim /etc/hosts
+  752  nslookup bigdata.example.com
+  753  ping bigdata.example.com -c 3
+  754  ping bigdata -c 3
+  755  cat /etc/hosts
+  756  # service -> hostname --> config --> IP's set
+  757  # localhost 
+  758  # bigdata.example.com
+  759  # did you get  it ? 
+  760  cd /usr/local/hadoop-3.1.3/
+  761  ls
+  762  hostname
+  763  cd etc/
+  764  ls
+  765  cd hadoop/
+  766  ls
+  767  ping 192.168.29.132 -c 3
+  768  ping 192.168.29.232 -c 3
+  769  cat /etc/hosts
+  770  ls
+  771  vim core-site.xml 
+  772  vim hdfs-site.xml 
+  773  vim mapred-site.xml 
+  774  vim yarn-site.xml 
+  775  cat core-site.xml 
+  776  cat hdfs-site.xml 
+  777  cat mapred-site.xml 
+  778  cat yarn-site.xml 
+  779  cd
+  780  # hdfs-site.xml
+  781  # core-site.xml
+  782  # map-site.xml
+  783  # is it clear ? 
+  784  start-all.sh
+  785  jps
+  786  ./break_tk.py 
+  787  sudo vim /etc/bashrc 
+  788  vim break_tk.py 
+  789  ./break_tk.py 
+  790  vim break_tk.py 
+  791  python break_tk.py 
+  792  ./break.py 
+  793  # Ready ? 
+  794  cd ~/Downloads/
+  795  ls
+  796  cat hive_main_Installation.txt 
+  797  ls
+  798   # ctrl + shift + t
+  799  ls
+  800  tar -xf apache-hive-3.1.2-bin.tar.gz 
+  801  ls
+  802  mv apache-hive-3.1.2-bin /usr/local
+  803  sduo mv apache-hive-3.1.2-bin /usr/local
+  804  sudo  mv apache-hive-3.1.2-bin /usr/local
+  805  ls
+  806  cd
+  807  cd /usr/local/apache-hive-3.1.2-bin/
+  808  pwd
+  809  ls
+  810  echo $CLASSPATH
+  811  pwd
+  812  vim /home/hduser/.bashrc 
+  813  source /home/hduser/.bashrc 
+  814  # alt 1 --> first shell
+  815  # alt 2 --> second shell 
+  816  ls
+  817  cd Downloads/
+  818  ls
+  819  cat hive_main_Installation.txt 
+  820  cat hive_main_Installation.txt  | less
+  821  cd /usr/local/apache-hive-3.1.2-bin/conf/
+  822  vim hive-site.xml 
+  823  hive
+  824  cd
+  825  source ~/.bashrc 
+  826  ping google.co.in -c 3
+  827  ip addr show ens33
+  828  #hadoop.example.com
+  829  #bigdata.example.com
+  830  s
+  831  3
+  832  #
+  833  # hostname 
+  834  # ip's are dynamic 
+  835  # hostname 
+  836  hostname
+  837  sudo hostnamectl set-hostname bigdata.example.com
+  838  bash
+  839  # meta store 
+  840  # mariadb database 
+  841  hdfs dfs -mkdir -p /user/hive/warehouse 
+  842  hdfs dfs -chmod a+rws /user/hive/warehouse
+  843  hdfs dfs -chmod a+rwx /user/hive/warehouse
+  844  hdfs dfs -ls /user/hive/warehouse 
+  845  hdfs dfs -chmod -r a+rwx /user/hive/warehouse 
+  846  hdfs dfs -chmod -R a+rwx /user/hive/warehouse 
+  847  ls
+  848  cd
+  849  echo $HIVE_HOME
+  850  cd $HIVE_HOME
+  851  ls
+  852  cd conf/
+  853  ls
+  854  cp hive-env.sh.template  hive-env.sh
+  855  chmod a+x hive-env.sh
+  856  vim hive-env.sh
+  857  ls
+  858  cp hive-default.xml.template hive-site.xml
+  859  vim hive-site.xml 
+  860  cp /usr/local/sqoop-1.4.7.bin__hadoop-2.6.0/lib/mariadb-java-client-2.6.1.jar /usr/local/apache-hive-3.1.2-bin/lib
+  861  mysql -u root -p 
+  862  cd
+  863  # hive installed sucessfully
+  864  mysql -u hive -p hive
+  865  #schematool -dbType mysql -initSchema
+  866  schematool -dbType mysql -initSchema
+  867  schematool -dbType mysql -initSchema
+  868  ls
+  869  cd /usr/local/apache-hive-3.1.2-bin/
+  870  ls
+  871  cd lib/
+  872  ls
+  873  ls | grep guava
+  874  ls
+  875  schematool -dbType mysql -initSchema
+  876  ls
+  877  ls | gujava
+  878  ls | guava
+  879  ls | grep guava
+  880  mv jersey-guava-2.25.1.jar ~/
+  881  schematool -dbType mysql -initSchema
+  882  cp ~/jersey-guava-2.25.1.jar ./
+  883  ls
+  884  cd
+  885  ls
+  886  cd /usr/local/apache-hive-3.1.2-bin/
+  887  ls
+  888  cd /var/log/
+  889  ls
+  890  cd -
+  891  ls
+  892  cd hcatalog/
+  893  ls
+  894  cd ..
+  895  ls
+  896  cd jdbc/
+  897  ls
+  898  cd ..
+  899  ls
+  900  cat RELEASE_NOTES.txt 
+  901  cd ..cd
+  902  cd
+  903  schematool -dbType mysql -initSchema
+  904  cd /usr/local/hadoop-3.1.3/
+  905  ls
+  906  cd com
+  907  cd lib
+  908  ls
+  909  cd native/
+  910  ls
+  911  cd examples/
+  912  ls
+  913  cd ../../
+  914  ls
+  915  cd ..
+  916  ls
+  917  cd libexec/
+  918  ls
+  919  cd ..
+  920  ls
+  921  cd include/
+  922  ls
+  923  cd ..
+  924  ls
+  925  cd
+  926  ls
+  927  cd sqoop_exp/
+  928  ls
+  929  cd ..
+  930  ls
+  931  find ./ -name *guava*
+  932  find / -name *guava*
+  933  find /
+  934  find / -name hello
+  935  find / -name *gujava*
+  936  sudo find / -name *gujava* 2> /dev/null
+  937  sudo find / -name *guava* 2> /dev/null
+  938  sudo find / -name *guava* 
+  939  sudo find / -name guava* 
+  940  sudo find / -name (guava* 
+  941  sudo find / -name *guava 
+  942  ls
+  943  cp guava-19.0.jar /usr/local/hadoop-3.1.3/lib
+  944  cp guava-19.0.jar /usr/local/apache-hive-3.1.2-bin/lib/
+  945  schematool -dbType mysql -initSchema
+  946  ls /opt/shared/hadoop-3.2.1/share/hadoop/hdfs/lib/guava-27.0-jre.jar
+  947  ls $HADOOP_INSTALL/hadoop-3.2.1/share/hadoop/hdfs/lib/guava-27.0-jre.jar
+  948  cd /usr/local/hadoop-3.1.3/share/hadoop/
+  949  ls
+  950  cd hdfs/
+  951  l
+  952  ls
+  953  cd lib/
+  954  ls
+  955  ls *guava*
+  956  mv /usr/local/apache-hive-3.1.2-bin/lib/guava-19.0.jar ~/
+  957  cp guava-27.0-jre.jar /usr/local/apache-hive-3.1.2-bin/lib/
+  958  mv /usr/local/hadoop-3.1.3/lib/guava-19.0.jar ~/
+  959  cp guava-27.0-jre.jar /usr/local/hadoop-3.1.3/lib
+  960  cd
+  961  schematool -dbType mysql -initSchema
+  962  cd /usr/local/apache-hive-3.1.2-bin/
+  963  cd conf/
+  964  ls
+  965  vim hive-site.xml 
+  966  show tables;
+  967  schematool -dbType mysql -initSchema
+  968  cd
+  969  mysql -u hive -p hive
+  970  cd /var/
+  971  ls
+  972  cd hadoop_warehouse/
+  973  ls
+  974  cd tem
+  975  cd tmp/
+  976  ls
+  977  mkdir hive
+  978  cd hive/
+  979  ls
+  980  pwd
+  981  ls
+  982  mkdir tmp
+  983  hive 
+  984  cd /usr/local/apache-hive-3.1.2-bin/
+  985  ls
+  986  cd conf/
+  987  ls
+  988  # CDH --> CLUSTER
+  989  # 4 days --> 5-6 hr 
+  990  ls
+  991  vim hive-site.xml 
+  992  cd
+  993  hive
+  994  stop-all.sh
+  995  jps
+  996  poweroff
+  997  start-all.sh
+  998  jps
+  999  cat .bashrc > env_.bashrc_file
+ 1000  ls
+ 1001  history
+ 1002  history > history_commands

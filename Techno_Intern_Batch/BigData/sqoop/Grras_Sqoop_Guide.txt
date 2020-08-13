@@ -1,0 +1,85 @@
+Available Sqoop commands
+
+codegen				--> Generate code to interact with database records
+Create-hive-table 	--> Import a table definition into Hive
+eval				--> Evaluate a SQL statement and display the results
+export				--> Export an HDFS directory to a database table
+help				--> List available commands
+import				--> Import a table from a database to HDFS
+Import-all-tables	-->	Import tables from a database to HDFS
+list-databases		--> List available databases on a server
+list-tables			-->	List available tables in a database
+version				-->	Display version information
+
+sqoop import --help 
+
+**command aliasing in sqoop 
+
+#we can use sqoop command alias such as sqoop-import, sqoop-export so on ...
+
+#create a database in mariadb server and also put jar file of mariadb java connector into sqoop library from 
+
+create database student;
+use student;
+create table student_data(id int(5) primary key auto_increment,name varchar(150) not null, course varchar(150),email varchar(150) );
+insert into student_data values (1,'sachin','python','sachin@grras.com');
+insert into student_data values (2,'kushal','linux','kushal@gmail.com'), (3,'nidhi','seo','nidhi.sharma@grras.com'), (4,'rajat','cloud','rajat.goyal@grras.com'), (5,'manish','python','manish@gmail.com');
+
+#listing tables 
+
+sqoop list-tables --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost/student --username root --password redhat;
+
+#sqoop eval statement 
+
+sqoop eval --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost/student --username root --password redhat --query "select * from student_data where name in ('sachin','kushal','nidhi')" 
+
+sqoop eval --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost/student --username root --password redhat --query "insert into student_data values(6,'yadvendra','linux','yadvendra@gmail.com');"; 
+
+#importing a table 
+
+sqoop import --driver org.mariadb.jdbc.Driver --bindir /usr/local/sqoop/lib --connect jdbc:mariadb://localhost/student --table student_data --username root --password redhat --target-dir /user/hduser/student1 -m 1
+
+sqoop import --driver org.mariadb.jdbc.Driver --bindir /usr/local/sqoop/lib/ --connect jdbc:mariadb://localhost/student --table student_data --username root --password redhat --target-dir /user/hduser/student1 --incremental append --check-column id --last-value 6 --m 2;
+
+sqoop import --driver org.mariadb.jdbc.Driver --bindir /usr/local/sqoop/lib/ --connect jdbc:mariadb://localhost/student --table student_data --username root --password redhat --target-dir /user/hduser/student2 --fields-terminated-by ',' --lines-terminated-by '\n' --m 3;
+
+sqoop import --driver org.mariadb.jdbc.Driver --bindir /usr/local/sqoop/lib/ --connect jdbc:mariadb://localhost/student --username root --password redhat --query "select * from student_data where id <= 6;" --target-dir /user/hduser/student3 --fields-terminated-by ':' --lines-terminated-by '\n' --m 3;
+
+sqoop import --driver org.mariadb.jdbc.Driver --bindir /usr/local/sqoop/lib/ --connect jdbc:mariadb://localhost/student --username root --password redhat --query "select * from student_data where id<=6 and \$CONDITIONS;" --target-dir /user/hduser/student4 --fields-terminated-by ':' --lines-terminated-by '\n' --m 1;
+
+
+#importing all tables 
+
+sqoop import-all-tables --bindir /usr/local/sqoop/lib --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost/world --username root --password redhat --warehouse-dir /user/hduser/world -m 1
+
+#sqoop command useing options file 
+
+sqoop --options-file sqoop.txt --warehouse-dir /user/hduser/mydata1
+
+--> options-file sqoop.txt 
+import-all-tables
+--bindir 
+/usr/local/sqoop/lib
+--driver 
+org.mariadb.jdbc.Driver
+--connect 
+jdbc:mariadb://localhost/world
+--username 
+root 
+--password 
+redhat
+<--
+
+--> for sqoop job download json jar file from here http://www.java2s.com/Code/Jar/j/Downloadjavajsonjar.htm and store it into sqoop library 
+
+#sqoop jobs 
+
+sqoop job --create myjob -- import-all-tables --bindir /usr/local/sqoop/lib/ --driver org.mariadb.jdbc.Driver --connect jdbc:mariadb://localhost/world --username root --password redhat --warehouse-dir /world -m 4
+
+sqoop job -show myjob
+
+sqoop job -exec myjob
+
+sqoop job -delete myjob
+
+

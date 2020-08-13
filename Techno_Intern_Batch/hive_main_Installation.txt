@@ -1,0 +1,126 @@
+#hive installation 
+
+1. Download latest hive binary tar.gz from this link 
+	https://hive.apache.org/downloads.html 
+	
+2. Now extract hive  binary package to /usr/local
+	
+	#sudo tar zxf apache-hive-x.y.z-bin.tar.gz
+	#sudo mv apache-hive-x.y.z-bin /usr/local/hive
+	#sudo chown hduser:hadoop -R /usr/local/hive
+	
+3. vim ~/.bashrc
+	
+	#hive variables starts here
+	export HIVE_HOME=/usr/local/hive
+	export HIVE_CONF_DIR=$HIVE_HOME/conf
+	export PATH=$PATH:$HIVE_HOME/bin
+	export CLASSPATH=$CLASSPATH:$HADOOP_HDFS_HOME/lib/*:.
+	export CLASSPATH=$CLASSPATH:$HIVE_HOME/lib/*:.
+	#hive variables end here 
+	
+    source ~/.bashrc
+	
+4. create a hive datawarehouse inside your hdfs filesystem by this command
+	#hdfs dfs -mkdir -p /user/hive/warehouse
+	---> also temp folder for temp files
+	#hdfs dfs -mkdir /tmp
+	---> change permission of both folder so that hive can work on them eaisly
+	#hdfs dfs -chmod g+w /user/hive/warehouse
+	#hdfs dfs -chmod g+w /tmp
+	
+5. Copy hive-env.sh and hive-site.xml and edit them 
+	#cd /usr/local/hive/conf
+	#cp hive-env.sh.template hive-env.sh
+	#vim hive-env.sh --->append HADOOP_HOME path to this file
+		export HADOOP_HOME=/usr/local/hadoop
+	#vim hive-site.xml
+			<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+			<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+			<configuration>
+	<property>
+		<name>javax.jdo.option.ConnectionURL</name>
+                <value>jdbc:mariadb://bigdata.example.com/hive?createDatabaseIfNotExist=true</value>
+        </property>
+
+        <property>
+               <name>javax.jdo.option.ConnectionDriverName</name>
+               <value>org.mariadb.jdbc.Driver</value>
+        </property>
+
+ 	<property>
+		 <name>javax.jdo.option.ConnectionUserName</name>
+ 		 <value>hive</value>
+	</property>
+       <property>
+		<name>javax.jdo.option.ConnectionPassword</name>
+		<value>hive</value>
+       </property>
+	<property>
+                 <name>datanucleus.autoCreateSchema</name>
+                 <value>true</value>
+        </property>
+
+ 	<property>
+		<name>datanucleus.fixedDatastore</name>
+                <value>true</value>
+        </property>
+
+        <property>
+                <name>datanucleus.autoCreateTables</name>
+                <value>True</value>
+        </property>
+
+			</configuration>
+
+Step 6.
+note extra steps:
+	first remove all ${java.io.tmpdir entries from hive-site.xml with absolute path like
+	# mkdir -p /var/hadoop_warehouse/hdfs/tmp/hive
+	# mkdir /var/hadoop_warehouse/hdfs/tmp/hive/tmp
+# now change these properties in your hive-site.xml file
+
+<property>
+    <name>hive.exec.local.scratchdir</name>
+    <value>file:///var/hadoop_warehouse/tmp/hive</value>
+    <description>Local scratch space for Hive jobs</description>
+ </property>
+
+
+<property>
+    <name>hive.downloaded.resources.dir</name>
+    <value>file:///var/hadoop_warehouse/tmp/hive/tmp/${hive.session.id}_resources</value>
+    <description>Temporary local directory for added resources in the remote file system.</description>
+  </property>
+
+<property>
+    <name>hive.querylog.location</name>
+    <value>file:////var/hadoop_warehouse/tmp/hive/${system:user.name}</value>
+    <description>Location of Hive run time structured log file</description>
+  </property>
+
+
+step 7:
+	-remove a jar file from hive library that is causing an error
+	# source ~/.bashrc
+
+	#rm $HIVE_HOME/lib/guava-19.0.jar
+	- copy another jar file using this command (check for version it might be diffrent that 27.0)
+	#cp $HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/guava-27.0-jre.jar $HIVE_HOME/lib
+	
+	#cp $HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/guava-27.0-jre.jar $HADOOP_HDFS_HOME/lib
+
+6. also copy your mysql connectors to hive lib so that hive can use mysql
+	#cp /path/to/connectory/mysql-connectors-java-x.y.z.jar /usr/local/hive/lib
+			or like this 
+	#cp /usr/local/sqoop-1.4.7.bin__hadoop-2.6.0/lib/mariadb-java-client-2.6.1.jar /usr/local/apache-hive-3.1.2-bin/lib
+
+	--->create schema of metastore in  msql using this command 
+	#source ~/.bashrc
+	#schematool -dbType mysql -initSchema
+	---> it will generate schema of metastore
+
+7. verify hive installation by firing command hive 
+	#hive
+	hive > show databases;
+	

@@ -1,0 +1,1 @@
+sqoop import --connect jdbc:mysql://localhost:3306/userdb --username root --password redhat --split-by id --columns id,name --table customer  --target-dir /user/hduser/ingest --fields-terminated-by "," --hive-import --create-hive-table --hive-table sqoop_workspace.customers

@@ -1,0 +1,207 @@
+HADOOP DOCUMENTATION
+
+In this documentation, we will have insights about how to install Hadoop single node cluster in our Linux Machine and some basic commands of HDFS with which we will be able to HDFS file operations. 
+Step 1: To make another user say hduser : 
+	# useradd hduser  
+Step 2: To grant it administrative privileges, make an entry in the row named wheel in the group file in etc directory
+	# cd /etc/group
+	wheel: ____ , hduser
+Step 3: Mounting the pendrive and copying its contents
+	# lsblk
+Step 4: Make a directory say pendrive to mount the additional device onto it
+	# mkdir pendrive
+Step 5: Mount the pendrive on the directory.
+	# mount /dev/sdb1 pendrive
+Step 6: See the contents
+	# ll or # ls
+Step 7: Hadoop installation folder
+ 	# cd Hadoop_Installation
+	# ls
+Step 8: Extract the hadoop-2.8.5.tar.gz file. The extracted files will automatically be saved to the hadoop-2.8.5 directory.
+	# tar -xvf hadoop-2.8.5.tar.gz
+Step 9: Move it to the location /usr/local as say Hadoop or any other of your preference.
+	# mv hadoop-2.8.5.tar.gz /usr/local/Hadoop 
+Step 10: Change the owner of Hadoop to the superuser we will be working as:
+	# chown hduser:hduser -R /usr/local/Hadoop
+Step 11: Hadoop works on java, therefore install java if not pre-installed.
+	# java -version  : gives the version of java if installed already
+Either download the binary file from official website of Oracle or go to the Downloads directory on which the pendrive was mounted.
+	# cd pendrive/Downloads 
+	# tar -xvf jdk-11.0.1.tar.gz
+	# mv jdk-11.0.1 /usr/local/java
+If the owner isn’t hduser change it by :
+	# chown hduser:hduser /usr/local/java
+Step 12: Set java path in the directory /etc/bashrc
+	$ sudo vim /etc/bashrc
+export JAVA_HOME=/usr/local/java
+	export PATH=/usr/local/java/bin:$PATH
+Step 13: Now generate the key for ssh login from hduser to localhost
+	$ ssh-keygen  
+	Now press enter 4 times to generate the key for ssh login.
+	$ cd .ssh/
+	$ ls
+	$ mv id_rsa.pub authorized_keys
+	$ ssh localhost
+After these steps you must be able to take the ssh login from hduser to localhost without password.
+
+Step 14: From hduser make a directory into the /app/hadoop to specify the location where to store the temporary data for hdfs entries. –p implies the parent directory.
+ 	$ sudo mkdir –p /var/hadoop_warehouse/tmp/hadoop
+Step 15: Now make the namenode and the datanode where the HDFS cluster is gonna work.
+	$ sudo mkdir -p /var/hadoop_warehouse/dfs/namenode
+	$ sudo mkdir -p /var/hadoop_warehouse/dfs/datanode
+	$ sudo mkdir -p /var/hadoop_warehouse/dfs/secondary
+Step 16: Make sure that the owner of the hadoop_store directory made is hduser and not root , otherwise change the user by the following command.
+	$ sudo chown hduser:hduser –R /var/hadoop_warehouse
+Step 17: Now make the repuired entries into the hadoop files.
+	$ cd /usr/local/hadoop/etc/hadoop
+	$ ls
+Step 18: Changes to be made in hadoop env file.
+	$ vim hadoop-env.sh
+	export JAVA_HOME=/usr/local/java
+  Step 19: Changes to be made in hdfs-site.xml-
+$ vim hdfs-site.xml
+	<property>
+		<name> dfs.replication</name>
+		<value>1</value>
+	</property>
+	<property>
+		<name>dfs.namenode.name.dir</name>
+		<value>file:///var/hadoop_warehouse/dfs/namenode</value>
+	</property>
+	<property>
+		<name>dfs.datanode.data.dir</name>
+		<value>file:///var/hadoop_warehouse/dfs/datanode</value>
+	</property>
+
+	<property>
+		<name>dfs.namenode.checkpoint.dir</name>
+	<value>file:///var/hadoop_warehouse/dfs/secondary</value>
+	</property>
+
+
+
+Step 20: Changes to be made in core-site.xml
+$ vim core-site.xml
+<configuration>
+	<property>
+		<name>hadoop.tmp.dir</name>
+		<value>file:///var/hadoop_warehouse/tmp/hadoop</value>
+	</property>
+	<property>
+		<name>fs.default.name</name>
+		<value>hdfs://localhost:9000</value>
+	</property>
+</configuration>
+
+
+Step 21: Changes to be made in mapred-site.xml
+$ vim mapred-site.xml
+	<property>
+		<name>mapred.job.tracker</name>
+		<value>localhost:9001</value>
+	</property>
+	
+	<property>
+        	<name>mapreduce.framework.name</name>
+        	<value>yarn</value>
+    	</property>
+    	
+	<property>
+        	<name>mapreduce.application.classpath</name>
+        	<value>$HADOOP_MAPRED_HOME/share/hadoop/mapreduce/*:$HADOOP_MAPRED_HOME/share/hadoop/mapreduce/lib/*</value>
+    	</property>
+
+$vim yarn-site.xml
+
+	<property>
+        	<name>yarn.nodemanager.aux-services</name>
+        	<value>mapreduce_shuffle</value>
+    	</property>
+    
+	<property>
+        	<name>yarn.nodemanager.env-whitelist</name>
+        	<value>JAVA_HOME,HADOOP_COMMON_HOME,HADOOP_HDFS_HOME,HADOOP_CONF_DIR,CLASSPATH_PREPEND_DISTCACHE,HADOOP_YARN_HOME,HADOOP_MAPRED_HOME</value>
+    	</property>
+
+
+Step 22: Now, write the paths into the /etc/bashrc file
+	$ sudo vim /etc/bashrc	
+export HADOOP_INSTALL=/usr/local/hadoop
+	export PATH=$PATH:$HADOOP_INSTALL/bin
+	export PATH=$PATH:$HADOOP_INSTALL/sbin
+	export HADOOP_MAPRED_HOME=$HADOOP_INSTALL
+	export HADOOP_COMMON_HOME=$HADOOP_INSTALL
+	export HADOOP_HDFS_HOME=$HADOOP_INSTALL
+	export YARN_HOME=$HADOOP_INSTALL
+	export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_INSTALL/lib/native
+	export HADOOP_OPTS="-Djava.library.path=$HADOOP_INSTALL/lib"
+
+Step 23 : Upadation of bashrc file :
+ $ sudo exec bash
+Step 24: To format namenode i.e. Mater
+ $ hadoop namenode-format
+Step 25: To start hadoop 
+$ start-all.sh
+Step 26: To know which services are running on the hdfs.
+$ jps
+
+
+BASIC HDFS COMMANDS 
+
+1.	version :This Hadoop command prints the hadoop version
+		hdfs dfs version
+2.	mkdir :  This HDFS command takes path as an argument and creates directories.
+		mkdir <path>
+		hdfs dfs -mkdir /dir1/directory_1
+3.	ls : This Hadoop HDFS ls command displays a list of the contents of a directory specified by path provided by the user, showing the names, permissions, owner, size and modification date for each entry.
+		ls <path>
+hdfs dfs -ls -R /dir1        : to recursively display path
+4.	put :This hadoop basic command copies the file or directory from the local file system to the destination within the DFS.
+
+put <localSource> <destination>
+
+hdfs dfs -put /home/Desktop  /dir1/directory_1
+
+5.	copyFromLocal: This hadoop shell command is similar to put command, but the source is restricted to a local file reference.
+
+copyFromLocal <localSource> <destination>
+
+hdfs dfs -copyFromLocal /home/Desktop/  /dir1/directory_1
+
+6.	get : This HDFS fs command copies the file or directory in HDFS identified by the source to the local file system path identified by local destination.
+
+get  <source> <localDest>
+
+		hdfs dfs -get /dir1/directory_1 /home/Desktop
+
+7.	copyToLocal : Similar to get command, only the difference is that in this the destination is restricted to a local file reference.
+
+copyToLocal <source> <localDest>
+
+		hdfs dfs -copyToLocal /dir1/directory_1 /home/Desktop
+
+8.	cat : This Hadoop fs shell command displays the contents of the filename on console or stdout.
+	
+cat <file-name>
+
+hdfs dfs -cat /user/hduser/dir1/sample
+
+9.	mv : This basic HDFS command moves the file or directory indicated by the source to destination, within hdfs.
+
+mv <src> <dest>
+	
+	hdfs dfs -mv /dir1/directory_1/sample.txt  /dir1/directory_2
+
+10.	 cp : This Hadoop File system shell command copies the file or directory identified by the source to destination, within HDFS.
+
+cp <src> <dest>
+
+		hdfs dfs -cp /dir1/directory_1/sample.txt  /dir1/directory_2
+
+
+
+
+
+
+
+

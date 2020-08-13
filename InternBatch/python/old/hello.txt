@@ -1,0 +1,5 @@
+Name,Maths,Chem,Phy
+sachin,89,78,90
+tanvi,76,87,89
+vijay,88,67,87
+sam,67,78,76

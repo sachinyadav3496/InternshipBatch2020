@@ -1,0 +1,88 @@
+import tkinter as tk
+import pickle
+
+print("...............loading model....................")
+with open('boston.pkl', 'rb') as fp:
+    model = pickle.load(fp)
+    fp.close()
+print("..............sucessfully loaded.................")
+
+root = tk.Tk()
+rooms = tk.DoubleVar()
+lstat = tk.DoubleVar()
+age = tk.DoubleVar()
+
+def clear():
+    rooms.set('')
+    lstat.set('')
+    age.set('')
+clear()
+
+f1 = tk.Frame(root)
+l1 = tk.Label(f1, text="# Rooms".center(20)+" : ")
+l1.config(bg='#eeeeee', fg='#333333', font=('monospace', 25, 'bold'))
+l1.pack(side=tk.LEFT, fill=tk.X, expand=tk.YES)
+
+e1 = tk.Entry(f1, textvariable=rooms)
+e1.config(bg='#eeeeee', fg='#333333', font=('monospace', 25, 'bold'))
+e1.pack(side=tk.LEFT, fill=tk.X, expand=tk.YES)
+e1.focus()
+f1.pack(fill=tk.BOTH, expand=tk.YES, padx=20, pady=20)
+
+f2 = tk.Frame(root)
+l2 = tk.Label(f2, text="LSTAT".center(20)+" : ")
+l2.config(bg='#eeeeee', fg='#333333', font=('monospace', 25, 'bold'))
+l2.pack(side=tk.LEFT, fill=tk.X, expand=tk.YES)
+
+e2 = tk.Entry(f2, textvariable=lstat)
+e2.config(bg='#eeeeee', fg='#333333', font=('monospace', 25, 'bold'))
+e2.pack(side=tk.LEFT, fill=tk.X, expand=tk.YES)
+f2.pack(fill=tk.BOTH, expand=tk.YES, padx=20, pady=20)
+
+f3 = tk.Frame(root)
+l3 = tk.Label(f3, text="AGE".center(20)+" : ")
+l3.config(bg='#eeeeee', fg='#333333', font=('monospace', 25, 'bold'))
+l3.pack(side=tk.LEFT, fill=tk.X, expand=tk.YES)
+
+e3 = tk.Entry(f3, textvariable=age)
+e3.config(bg='#eeeeee', fg='#333333', font=('monospace', 25, 'bold'))
+e3.pack(side=tk.LEFT, fill=tk.X, expand=tk.YES)
+f3.pack(fill=tk.BOTH, expand=tk.YES, padx=20, pady=20)
+
+b1 = tk.Button(root, text='Predict Price', command=lambda : predict())
+b1.config(bg='white', fg='red', font=('monospace', 25, 'bold'))
+b1.pack(fill=tk.X, expand=tk.YES)
+
+b2 = tk.Button(root, text='Exit', command=lambda : root.quit())
+b2.config(fg='white', bg='red', font=('monospace', 25, 'bold'))
+b2.pack(fill=tk.X, expand=tk.YES)
+
+def predict():
+    r = rooms.get()
+    l = lstat.get()
+    a = age.get()
+    features = [ [ r, l, a ] ]
+    clear()
+    price = model.predict(features)[0]
+    print("Price of house : ", price)
+    win = tk.Toplevel(root)
+    win.grab_set()
+    text = f"""
+    _________________
+    #Rooms : {r:.2f}
+    LSTAT  : {l:.2f}
+    AGE    : {a:.2f}
+    _________________
+    Price  : {price:.2f}
+    """
+    msg = tk.Message(win, text=text)
+    msg.config(bg='#eeeeee', fg='#333333', font=('monospace', 25, 'bold'))
+    msg.pack(fill=tk.BOTH, expand=tk.YES)
+    eb = tk.Button(win, text='Exit', command=lambda : win.destroy())
+    eb.config(fg='white', bg='red', font=('monospace', 25, 'bold'))
+    eb.pack(fill=tk.X, expand=tk.YES)
+    e1.focus()
+
+    
+root.title('Hosing Price Prediction Application')
+root.mainloop()
